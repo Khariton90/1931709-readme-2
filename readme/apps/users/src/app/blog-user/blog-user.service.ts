@@ -17,7 +17,7 @@ export class BlogUserService {
       throw new Error('User not found');
     }
 
-    return { ...existUser };
+    return existUser;
   }
 
   async register(dto: CreateUserDto) {

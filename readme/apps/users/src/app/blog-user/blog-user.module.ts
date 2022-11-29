@@ -6,7 +6,7 @@ import { BlogUserService } from './blog-user.service';
 @Module({
   imports: [],
   providers: [BlogUserMemoryRepository, BlogUserService],
-  exports: [BlogUserMemoryRepository],
+  exports: [BlogUserMemoryRepository, BlogUserService],
   controllers: [BlogUserController],
 })
 export class BlogUserModule {}
