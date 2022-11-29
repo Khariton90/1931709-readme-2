@@ -10,6 +10,16 @@ export class BlogUserService {
     private readonly blogUserMemoryRepository: BlogUserMemoryRepository
   ) {}
 
+  async findByEmail(email: string) {
+    const existUser = await this.blogUserMemoryRepository.findByEmail(email);
+
+    if (!existUser) {
+      throw new Error('User not found');
+    }
+
+    return { ...existUser };
+  }
+
   async register(dto: CreateUserDto) {
     const { email, firstname, lastname, password, dateRegister } = dto;
     const blogUser = {
