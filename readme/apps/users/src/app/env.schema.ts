@@ -20,7 +20,7 @@ export default Joi.object({
     .required(),
   MONGO_PASSWORD: Joi
     .string(),
-  MONGO_AUTH_BASE: Joi
+  MONGO_DB_BASE: Joi
     .string()
     .required()
 });

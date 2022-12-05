@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 
-const DEFAULT_MONGO_DB_PORT = 27017;
+const DEFAULT_MONGO_DB_PORT = 27018;
 
 export default Joi.object({
   MONGO_DB: Joi
@@ -20,7 +20,7 @@ export default Joi.object({
     .required(),
   MONGO_PASSWORD: Joi
     .string(),
-  MONGO_AUTH_BASE: Joi
+  MONGO_DB_BASE: Joi
     .string()
     .required()
 });
