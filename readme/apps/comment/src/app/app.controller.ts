@@ -1,3 +1,4 @@
+import { CreateCommentDto } from './dto/create-comment.dto';
 import { plainToInstance } from 'class-transformer';
 import { CommentDto } from './dto/comment.dto';
 import { Controller, Post, Body } from '@nestjs/common';
@@ -10,7 +11,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Post('create')
-  async create(@Body() dto: CommentDto) {
+  async create(@Body() dto: CreateCommentDto) {
     const { _id, text, userId, postId } = await this.appService.create(dto);
 
     return plainToInstance(CommentDto, {
