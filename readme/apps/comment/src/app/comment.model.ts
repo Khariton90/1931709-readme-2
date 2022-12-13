@@ -1,22 +1,21 @@
-import { Comment } from '@readme/shared-types';
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({
   collection: 'comments'
 })
-export class CommentsModel extends Document implements Comment {
+export class CommentsModel extends Document {
   @Prop()
-  _id: string;
+  public _id: string;
 
   @Prop()
-  text: string;
+  public text: string;
 
   @Prop()
-  postId: string;
+  public postId: string;
 
   @Prop()
-  userId: string;
+  public userId: string;
 }
 
 export const CommentsSchema = SchemaFactory.createForClass(CommentsModel);

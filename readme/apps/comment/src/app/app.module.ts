@@ -1,3 +1,4 @@
+import { CommentRepository } from './comment.repository';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -21,16 +22,11 @@ import envSchema from './env.schema';
     MongooseModule.forRootAsync(
       getMongoDbConfig(),
     ),
-    MongooseModule.forFeatureAsync([
-      {
-        name: CommentsModel.name,
-        useFactory() {
-          return CommentsSchema;
-        },
-      }
+    MongooseModule.forFeature([
+      {name: CommentsModel.name, schema: CommentsSchema}
     ])
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CommentRepository],
 })
 export class AppModule {}

@@ -1,16 +1,15 @@
-import { ConfigService } from '@nestjs/config';
+import { CommentDto } from './dto/comment.dto';
+import { CommentEntity } from './comment.entity';
+import { CommentRepository } from './comment.repository';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { CommentsModel } from './comment.model';
-import { Model } from 'mongoose';
 
 @Injectable()
 export class AppService {
+  constructor(private readonly commentRepository: CommentRepository) {}
 
-  constructor(
-    @InjectModel(CommentsModel.name) private readonly commentModel: Model<CommentsModel>,
-    private readonly configService: ConfigService
-  ) {
-    console.log(configService.get<string>('database.name'))
+  public async create(dto: CommentDto) {
+    const commentEntity = new CommentEntity({...dto});
+
+   return this.commentRepository.create(commentEntity);
   }
 }

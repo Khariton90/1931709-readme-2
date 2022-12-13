@@ -11,7 +11,7 @@ export function getMongoDbConfig(): MongooseModuleAsyncOptions {
         host: configService.get('database.host'),
         port: configService.get('database.port'),
         databaseName: configService.get('database.name'),
-        authDatabase: configService.get('database.authBase'),
+        authDatabase: configService.get('database.database'),
       })
     }),
     inject: [ConfigService]
