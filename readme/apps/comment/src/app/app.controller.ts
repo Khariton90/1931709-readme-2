@@ -11,7 +11,9 @@ export class AppController {
 
   @Post('create')
   async create(@Body() dto: CommentDto): Promise<CommentDto> {
-    const { _id, text, userId, postId } = await this.appService.create(dto);
+    const newComment = await this.appService.create(dto);
+
+    const { _id, text, userId, postId } = newComment.toObject();
 
     return plainToInstance(CommentDto, {
       _id,
