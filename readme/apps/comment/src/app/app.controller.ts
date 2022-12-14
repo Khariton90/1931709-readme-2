@@ -10,7 +10,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Post('create')
-  async create(@Body() dto: CommentDto) {
+  async create(@Body() dto: CommentDto): Promise<CommentDto> {
     const { _id, text, userId, postId } = await this.appService.create(dto);
 
     return plainToInstance(CommentDto, {

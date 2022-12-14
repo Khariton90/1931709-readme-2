@@ -12,10 +12,17 @@ export class CommentRepository {
   constructor (
    @InjectModel(CommentsModel.name) private readonly commentModel: Model<CommentsModel>) {}
 
-  public async create(item: CommentEntity): Promise<Comment> {
-    const newComment = new this.commentModel(item);
+  public async create(item: CommentEntity): Promise<CommentEntity> {
+    const { _id, text, userId, postId } = await new this.commentModel(item).save();
 
-    return newComment.save();
+    item.fillEntity({
+      _id: _id.toString(),
+      text,
+      userId,
+      postId
+    });
+
+    return item;
   }
 
   public async findById(postId: string): Promise<Comment[]> {
