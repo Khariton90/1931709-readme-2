@@ -6,9 +6,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 })
 export class CommentsModel extends Document {
   @Prop()
-  public _id: string;
-
-  @Prop()
   public text: string;
 
   @Prop()

@@ -1,4 +1,4 @@
-import { CreateCommentDto } from './dto/create-comment.dto';
+import { CommentDto } from './dto/comment.dto';
 import { CommentEntity } from './comment.entity';
 import { CommentRepository } from './comment.repository';
 import { Injectable } from '@nestjs/common';
@@ -7,8 +7,8 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
   constructor(private readonly commentRepository: CommentRepository) {}
 
-  public async create(dto: CreateCommentDto) {
-    const commentEntity = new CommentEntity({_id: '', ...dto});
+  public async create(dto: CommentDto) {
+    const commentEntity = new CommentEntity({...dto});
 
    return this.commentRepository.create(commentEntity);
   }

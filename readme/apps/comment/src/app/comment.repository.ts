@@ -13,9 +13,9 @@ export class CommentRepository {
    @InjectModel(CommentsModel.name) private readonly commentModel: Model<CommentsModel>) {}
 
   public async create(item: CommentEntity): Promise<Comment> {
-    const newComment = await new this.commentModel(item).save();
+    const newComment = new this.commentModel(item);
 
-    return newComment
+    return newComment.save();
   }
 
   public async findById(postId: string): Promise<Comment[]> {
