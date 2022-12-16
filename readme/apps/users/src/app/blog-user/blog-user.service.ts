@@ -1,4 +1,4 @@
-import { BlogUserMemoryRepository } from './blog-user-memory.repository';
+import { BlogUserRepository } from './blog-user.repository';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as dayjs from 'dayjs';
@@ -7,11 +7,11 @@ import { BlogUserEntity } from './blog-user.entity';
 @Injectable()
 export class BlogUserService {
   constructor(
-    private readonly blogUserMemoryRepository: BlogUserMemoryRepository
+    private readonly blogUserRepository: BlogUserRepository
   ) {}
 
   async findByEmail(email: string) {
-    const existUser = await this.blogUserMemoryRepository.findByEmail(email);
+    const existUser = await this.blogUserRepository.findByEmail(email);
 
     if (!existUser) {
       throw new Error('User not found');
@@ -34,13 +34,13 @@ export class BlogUserService {
       posts: 0
     }
 
-    const existUser = await this.blogUserMemoryRepository.findByEmail(email);
+    const existUser = await this.blogUserRepository.findByEmail(email);
 
     if (existUser) {
       throw new Error('User already exists')
     }
 
     const userEntity = await new BlogUserEntity(blogUser).setPassword(password);
-    return this.blogUserMemoryRepository.create(userEntity);
+    return this.blogUserRepository.create(userEntity);
   }
 }

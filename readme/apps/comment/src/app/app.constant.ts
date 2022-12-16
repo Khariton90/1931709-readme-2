@@ -1,0 +1,1 @@
+export const ENV_FILE_COMMENT_PATH = 'environments/.comment.env';
