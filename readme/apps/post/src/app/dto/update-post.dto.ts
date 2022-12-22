@@ -1,4 +1,4 @@
-export interface Post {
+export class UpdatePostDto {
   id?: number;
   title: string;
   videoUrl: string;

@@ -54,6 +54,41 @@
         "jestConfig": "apps/post/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "db-validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma validate --schema ./prisma/schema.prisma",
+        "cwd": "apps/post"
+      }
+    },
+    "db-migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma migrate dev --schema ./prisma/schema.prisma --name initial --skip-generate --skip-seed",
+        "cwd": "apps/post"
+      }
+    },
+    "db-reset": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma reset --schema ./prisma/schema.prisma --force --skip-generate --skip-seed",
+        "cwd": "apps/post"
+      }
+    },
+    "db-generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma generate --schema ./prisma/schema.prisma",
+        "cwd": "apps/post"
+      }
+    },
+    "db-fill": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma db seed",
+        "cwd": "apps/post"
+      }
     }
   },
   "tags": []
