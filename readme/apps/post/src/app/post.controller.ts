@@ -20,10 +20,7 @@ export class PostController {
 
   @Get('/:id')
   async show(@Param('id') id: string) {
-    const intId = parseInt(id, 10);
-
-    const post = await this.postService.findPost(intId);
-    console.log(post);
+    const post = await this.postService.findPost(parseInt(id, 10));
     return plainToInstance(ResponsePostDto, post);
   }
 
@@ -34,14 +31,14 @@ export class PostController {
   }
 
   @Patch('/:id')
-  async update(@Param('id') id: number, @Body() dto: UpdatePostDto) {
-    const updatePost = await this.postService.updatePost(id, dto);
+  async update(@Param('id') id: string, @Body() dto: UpdatePostDto) {
+    const updatePost = await this.postService.updatePost(parseInt(id, 10), dto);
 
     return plainToInstance(ResponsePostDto, updatePost);
   }
 
   @Delete('/:id')
-  async delete(@Param('id') id: number) {
-    this.postService.deletePost(id);
+  async delete(@Param('id') id: string) {
+    this.postService.deletePost(parseInt(id, 10));
   }
 }
