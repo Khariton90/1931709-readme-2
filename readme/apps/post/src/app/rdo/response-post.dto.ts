@@ -1,4 +1,4 @@
-export interface Post {
+export class ResponsePostDto {
   id?: number;
   title: string;
   videoUrl: string;
