@@ -5,7 +5,8 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Post, Get, Patch, Delete } from '@nestjs/common';
 import { PostService } from "./post.service";
-import { Body, Param } from '@nestjs/common/decorators';
+import { Body, Param, Query } from '@nestjs/common/decorators';
+import { PostQuery } from './query/post.query';
 
 @ApiTags('post')
 @Controller('post')
@@ -13,8 +14,8 @@ export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Get('/')
-  async index() {
-    const posts = await this.postService.findAllPost();
+  async index(@Query() query: PostQuery) {
+    const posts = await this.postService.findAllPost(query);
     return plainToInstance(ResponsePostDto, posts);
   }
 

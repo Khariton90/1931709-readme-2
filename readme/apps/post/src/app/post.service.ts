@@ -1,3 +1,4 @@
+import { PostQuery } from './query/post.query';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostEntity } from './post.entity';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -13,8 +14,8 @@ export class PostService {
     return this.postRepository.findById(id);
   }
 
-  async findAllPost(): Promise<Post[]> {
-    return this.postRepository.find();
+  async findAllPost(query: PostQuery): Promise<Post[]> {
+    return this.postRepository.find(query);
   }
 
   async createPost(dto: CreatePostDto): Promise<Post> {
