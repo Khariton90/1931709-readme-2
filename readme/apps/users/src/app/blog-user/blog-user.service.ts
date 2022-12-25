@@ -23,7 +23,6 @@ export class BlogUserService {
   async register(dto: CreateUserDto) {
     const { email, firstname, lastname, password, dateRegister } = dto;
     const blogUser = {
-      _id: '',
       email, 
       firstname, 
       lastname, 

@@ -13,7 +13,7 @@ export class AuthController {
     private readonly authService: AuthService
   ) {}
 
-  @Get('login')
+  @Get('/')
   @ApiResponse({status: HttpStatus.OK, description: 'User data received'})
   @ApiResponse({status: HttpStatus.BAD_REQUEST, description: 'Bad Request, invalid data format'})
   @ApiResponse({status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Invalid username or password'})
