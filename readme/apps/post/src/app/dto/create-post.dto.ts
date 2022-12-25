@@ -1,3 +1,4 @@
+import { IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePostDto {
@@ -7,18 +8,21 @@ export class CreatePostDto {
     required: true,
     example: 'Hello world',
   })
+  @IsString()
   title: string;
 
   @ApiProperty({
     required: true,
     example: 'https://youtube.com',
   })
+  @IsString()
   videoUrl: string;
 
   @ApiProperty({
     required: true,
     example: 'https://unsplash.com',
   })
+  @IsString()
   preview: string;
 
   tags: string[];
@@ -27,12 +31,14 @@ export class CreatePostDto {
     required: true,
     example: 'Welcome to my first post',
   })
+  @IsString()
   description: string;
 
   @ApiProperty({
     required: true,
     example: 'describe and like',
   })
+  @IsString()
   quote: string;
 
   @ApiProperty({
@@ -45,14 +51,17 @@ export class CreatePostDto {
     required: true,
     example: 'https://unsplash.com',
   })
+  @IsString()
   photo: string;
 
   @ApiProperty({
     required: true,
     example: 'https://unsplash.com',
   })
+  @IsString()
   link: string;
   
   createdAt?: Date
+  
   publishAt?: Date
 }

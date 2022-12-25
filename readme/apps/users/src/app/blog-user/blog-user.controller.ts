@@ -1,4 +1,6 @@
-import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
+import { CheckMongoidValidationPipe } from './../pipes/CheckMongoidValidationPipe';
+import { Param } from '@nestjs/common/decorators';
+import { Body, Controller, HttpStatus, Post, Get } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { BlogUserService } from './blog-user.service';
@@ -27,5 +29,18 @@ export class BlogUserController {
       firstname,
       lastname
     });
+  }
+
+  @Get(':id')
+  async show(@Param('id', CheckMongoidValidationPipe) id: string) {
+    const { _id, email, dateRegister, firstname, lastname } = await this.blogUserService.findById(id);
+
+    return plainToClass(ResponseUserDto, {
+      id: _id,
+      email,
+      dateRegister,
+      firstname,
+      lastname
+    })
   }
 }

@@ -42,4 +42,14 @@ export class BlogUserService {
     const userEntity = await new BlogUserEntity(blogUser).setPassword(password);
     return this.blogUserRepository.create(userEntity);
   }
+
+  async findById(id: string) {
+    const existUser = await this.blogUserRepository.findById(id);
+
+    if (!existUser) {
+      throw new Error('the user with this id was not found');
+    }
+
+    return existUser;
+  }
 }
