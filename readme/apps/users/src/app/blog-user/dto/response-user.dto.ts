@@ -40,4 +40,12 @@ export class ResponseUserDto {
   })
   @Expose()
   public lastname: string;
+
+  @ApiProperty({
+    description: 'user avatar',
+    example: 'image.jpg'
+  })
+  @Expose()
+  public avatar: string;
+
 }

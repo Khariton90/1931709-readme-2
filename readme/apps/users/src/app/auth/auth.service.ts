@@ -38,11 +38,21 @@ export class AuthService {
       email: user.email,
       dateRegister: user.dateRegister,
       lastname: user.lastname,
-      firstname: user.firstname
+      firstname: user.firstname,
+      avatar: user.avatar
     }
 
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(payload),
+      this.jwtService.signAsync(payload, {
+        expiresIn: '7d',
+        algorithm: 'HS256' 
+      })
+    ]);
+  
     return {
-      access_token: await this.jwtService.signAsync(payload)
+      refresh_token: refreshToken,
+      access_token:  accessToken
     };
   }
 }

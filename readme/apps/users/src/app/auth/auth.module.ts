@@ -13,8 +13,8 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: getJwtConfig
-    })
+      useFactory:  getJwtConfig
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
