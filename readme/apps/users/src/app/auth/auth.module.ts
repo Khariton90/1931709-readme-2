@@ -1,3 +1,6 @@
+import { AuthRepository } from './auth.repository';
+import { AuthModel, AuthSchema } from './auth.model';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BlogUserModule } from './../blog-user/blog-user.module';
 import { Module } from '@nestjs/common';
@@ -9,14 +12,17 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
+    MongooseModule.forFeature([
+      { name: AuthModel.name, schema: AuthSchema}
+    ]),
     BlogUserModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory:  getJwtConfig
+      useFactory: getJwtConfig
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, AuthRepository],
 })
 export class AuthModule {}

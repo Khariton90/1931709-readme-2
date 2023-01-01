@@ -1,10 +1,10 @@
 export class UpdatePostDto {
   id?: number;
-  title: string;
-  videoUrl: string;
-  preview: string;
-  tags: string[];
-  description: string;
+  title?: string;
+  videoUrl?: string;
+  preview?: string;
+  tags?: string[];
+  description?: string;
   quote: string;
   authorId: string;
   photo: string;
@@ -12,3 +12,4 @@ export class UpdatePostDto {
   createdAt?: Date
   publishAt?: Date
 }
+

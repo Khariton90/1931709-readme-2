@@ -47,7 +47,7 @@ export class BlogUserService {
     const existUser = await this.blogUserRepository.findById(id);
 
     if (!existUser) {
-      throw new Error('the user with this id was not found');
+      throw new Error('The user with this id was not found');
     }
 
     return existUser;
