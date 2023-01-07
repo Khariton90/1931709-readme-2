@@ -36,15 +36,14 @@ export class BlogUserController {
   @ApiResponse({status: HttpStatus.OK, description: 'The user was received by :id'})
   @ApiResponse({status: HttpStatus.UNAUTHORIZED, description: 'The user is not logged in'})
   async show(@Param('id', CheckMongoidValidationPipe) id: string, @Req() req) {
-    req.user
-    const { _id, email, dateRegister, firstname, lastname } = await this.blogUserService.findById(id);
+      const { _id, email, dateRegister, firstname, lastname } = await this.blogUserService.findByEmail(req.user.email);
 
-    return plainToClass(ResponseUserDto, {
-      _id,
-      email,
-      dateRegister,
-      firstname,
-      lastname
-    })
+      return plainToClass(ResponseUserDto, {
+        _id,
+        email,
+        dateRegister,
+        firstname,
+        lastname
+      })
   }
 }
