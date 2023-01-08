@@ -1,13 +1,17 @@
 import { BlogUserRepository } from './blog-user.repository';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as dayjs from 'dayjs';
 import { BlogUserEntity } from './blog-user.entity';
+import { ClientProxy } from '@nestjs/microservices';
+import { createEvent } from '@readme/core';
+import { CommandEvent } from '@readme/shared-types';
 
 @Injectable()
 export class BlogUserService {
   constructor(
-    private readonly blogUserRepository: BlogUserRepository
+    private readonly blogUserRepository: BlogUserRepository,
+    @Inject('RABBITMQ_SERVICE') private readonly rabbitClient: ClientProxy,
   ) {}
 
   async findByEmail(email: string) {
@@ -40,7 +44,18 @@ export class BlogUserService {
     }
 
     const userEntity = await new BlogUserEntity(blogUser).setPassword(password);
-    return this.blogUserRepository.create(userEntity);
+    const createUser = await this.blogUserRepository.create(userEntity);
+
+    this.rabbitClient.emit(
+      createEvent(CommandEvent.AddSubscriber),
+      {
+        id: createUser._id,
+        name: createUser.firstname,
+        email: createUser.email
+      }
+    )
+
+    return createUser;
   }
 
   async findById(id: string) {
