@@ -1,0 +1,7 @@
+From: Evgeniy Kharitonov <chinatruckspb@gmail.ru>
+To: Evgeniy <funboxxx@mail.ru>
+Subject: Hello world
+Date: Th, 13 Dec 2022 19:00:00
+Content-Type: plain/text; charset=utf8
+
+Hello world!!!!
