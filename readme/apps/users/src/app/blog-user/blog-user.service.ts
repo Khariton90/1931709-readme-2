@@ -6,12 +6,13 @@ import { BlogUserEntity } from './blog-user.entity';
 import { ClientProxy } from '@nestjs/microservices';
 import { createEvent } from '@readme/core';
 import { CommandEvent } from '@readme/shared-types';
+import { RABBITMQ_SERVICE } from './blog-user.constant';
 
 @Injectable()
 export class BlogUserService {
   constructor(
     private readonly blogUserRepository: BlogUserRepository,
-    @Inject('RABBITMQ_SERVICE') private readonly rabbitClient: ClientProxy,
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
   ) {}
 
   async findByEmail(email: string) {
@@ -50,7 +51,8 @@ export class BlogUserService {
       createEvent(CommandEvent.AddSubscriber),
       {
         id: createUser._id,
-        name: createUser.firstname,
+        firstname: createUser.firstname,
+        lastname: createUser.lastname,
         email: createUser.email
       }
     )

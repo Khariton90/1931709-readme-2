@@ -7,6 +7,7 @@ import { BlogUserModel, BlogUserSchema } from './blog-user.model';
 import { ClientsModule } from '@nestjs/microservices';
 import { getRabbitMqConfig } from '../config/rabbitmq.config';
 import { ConfigService } from '@nestjs/config/dist/config.service';
+import { RABBITMQ_SERVICE } from './blog-user.constant';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { ConfigService } from '@nestjs/config/dist/config.service';
     ]),
     ClientsModule.registerAsync([
       {
-        name: 'RABBITMQ_SERVICE',
+        name: RABBITMQ_SERVICE,
         useFactory: getRabbitMqConfig,
         inject: [ConfigService],
       }

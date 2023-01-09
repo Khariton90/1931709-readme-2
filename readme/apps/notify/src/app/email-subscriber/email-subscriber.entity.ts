@@ -4,6 +4,7 @@ import { Subscriber } from '@readme/shared-types';
 export class EmailSubscriberEntity implements Subscriber {
   public email: string;
   public firstname: string;
+  public lastname: string;
   public id: string;
 
   constructor(emailSubscriber: Subscriber) {
@@ -18,5 +19,6 @@ export class EmailSubscriberEntity implements Subscriber {
     this.id = emailSubscriber.id;
     this.email = emailSubscriber.email;
     this.firstname = emailSubscriber.firstname;
+    this.lastname = emailSubscriber.lastname;
   }
 }

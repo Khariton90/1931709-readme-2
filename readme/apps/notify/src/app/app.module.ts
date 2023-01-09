@@ -5,6 +5,7 @@ import { NOTIFY_SERVICE_ENV_PATH } from './app.constant';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { rabbitMqOptions } from './config/rabbitmq.config';
+import { mailOptions } from './config/mail.config';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { rabbitMqOptions } from './config/rabbitmq.config';
       cache: true,
       isGlobal: true,
       envFilePath: NOTIFY_SERVICE_ENV_PATH,
-      load: [rabbitMqOptions, mongoDbOptions],
+      load: [rabbitMqOptions, mongoDbOptions, mailOptions],
     }),
     MongooseModule.forRootAsync(getMongoDbConfig()),
     EmailSubscriberModule,

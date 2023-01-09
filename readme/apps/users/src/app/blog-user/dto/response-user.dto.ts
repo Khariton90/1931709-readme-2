@@ -49,5 +49,4 @@ export class ResponseUserDto {
   })
   @Expose()
   public avatar: string;
-
 }
