@@ -7,10 +7,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 })
 export class BlogUserModel extends Document implements User {
   @Prop({
-  })
-  _id: string
-
-  @Prop({
     required: true,
     unique: true
   })

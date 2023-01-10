@@ -1,10 +1,12 @@
-import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
+import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
+import { CheckMongoidValidationPipe } from './../pipes/CheckMongoidValidationPipe';
+import { Param } from '@nestjs/common/decorators';
+import { Body, Controller, HttpStatus, Post, Get, UseGuards, Req } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { BlogUserService } from './blog-user.service';
 import { plainToClass } from 'class-transformer';
 import { ResponseUserDto } from './dto/response-user.dto';
-
 
 @ApiTags('user')
 @Controller('user')
@@ -27,5 +29,21 @@ export class BlogUserController {
       firstname,
       lastname
     });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  @ApiResponse({status: HttpStatus.OK, description: 'The user was received by :id'})
+  @ApiResponse({status: HttpStatus.UNAUTHORIZED, description: 'The user is not logged in'})
+  async show(@Param('id', CheckMongoidValidationPipe) id: string, @Req() req) {
+      const { _id, email, dateRegister, firstname, lastname } = await this.blogUserService.findByEmail(req.user.email);
+
+      return plainToClass(ResponseUserDto, {
+        _id,
+        email,
+        dateRegister,
+        firstname,
+        lastname
+      })
   }
 }

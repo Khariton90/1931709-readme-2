@@ -1,4 +1,5 @@
 import { Logger } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common/pipes';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app/app.module';
@@ -16,6 +17,10 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('spec', app, document);
+
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true
+  }));
 
   const port = process.env.PORT || 3333;
   await app.listen(port);

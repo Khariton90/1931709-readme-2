@@ -1,3 +1,4 @@
+import { PostQuery } from './query/post.query';
 import { PrismaService } from './prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CRUDRepository } from "@readme/core";
@@ -16,13 +17,20 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
     })
   }
 
-  public async find(ids: number[] = []): Promise<Post[]> {
+  public async find({ limit, sortDirection, page }: PostQuery, ids: [] = []): Promise<Post[]> {
     return this.prisma.post.findMany({
       where: {
         id: {
           in: ids.length > 0 ? ids : undefined
         }
-      }
+      },
+      take: limit,
+      orderBy: [
+        {
+          createdAt: sortDirection
+        }
+      ],
+      skip: page > 0 ? limit * (page - 1) : undefined,
     })
   }
 

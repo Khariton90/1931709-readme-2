@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: test
       MONGO_INITDB_DATABASE: readme-users
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      test: echo 'db.runCommand("ping").ok' | mongosh mongo:27017/readme-users --quiet
       interval: 10s
       timeout: 5s
       retries: 5

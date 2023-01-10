@@ -4,11 +4,22 @@ import { BlogUserService } from './blog-user.service';
 import { BlogUserRepository } from './blog-user.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BlogUserModel, BlogUserSchema } from './blog-user.model';
+import { ClientsModule } from '@nestjs/microservices';
+import { getRabbitMqConfig } from '../config/rabbitmq.config';
+import { ConfigService } from '@nestjs/config/dist/config.service';
+import { RABBITMQ_SERVICE } from './blog-user.constant';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: BlogUserModel.name, schema: BlogUserSchema }
+      { name: BlogUserModel.name, schema: BlogUserSchema}
+    ]),
+    ClientsModule.registerAsync([
+      {
+        name: RABBITMQ_SERVICE,
+        useFactory: getRabbitMqConfig,
+        inject: [ConfigService],
+      }
     ])
   ],
   providers: [BlogUserRepository, BlogUserService],
