@@ -24,4 +24,9 @@ export class EmailSubscriberService {
 
     return this.emailSubscriberRepository.create(new EmailSubscriberEntity(subscriber));
   }
+
+  public async addPost() {
+    const allSubscribers = await this.emailSubscriberRepository.findAll();
+    allSubscribers.forEach(async (subscriber) => await this.mailService.sendNotifyPost(subscriber));
+  }
 }
