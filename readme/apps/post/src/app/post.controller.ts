@@ -5,10 +5,9 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Controller, Post, Get, Patch, Delete, HttpStatus, UseGuards } from '@nestjs/common';
 import { PostService } from "./post.service";
-import { Body, Param, Query, Req } from '@nestjs/common/decorators';
+import { Body, Param, Query } from '@nestjs/common/decorators';
 import { PostQuery } from './query/post.query';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { ExtendedUserRequest } from '@readme/shared-types';
 
 @ApiTags('post')
 @Controller('post')
@@ -24,8 +23,7 @@ export class PostController {
 
   @Get('/:id')
   @ApiResponse({status: HttpStatus.OK, description: 'One post was received'})
-  async show(@Param('id') id: number, @Req() req: ExtendedUserRequest) {
-    console.log(req.user);
+  async show(@Param('id') id: number) {
     const post = await this.postService.findPost(id);
     return plainToInstance(ResponsePostDto, post);
   }
