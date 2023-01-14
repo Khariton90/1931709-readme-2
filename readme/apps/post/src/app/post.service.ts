@@ -8,7 +8,9 @@ import { Post } from '@readme/shared-types';
 
 @Injectable()
 export class PostService {
-  constructor(private readonly postRepository: PostRepository) {}
+  constructor(
+    private readonly postRepository: PostRepository,
+    ) {}
 
   async findPost(id: number): Promise<Post> {
     return this.postRepository.findById(id);

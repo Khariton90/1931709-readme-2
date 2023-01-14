@@ -36,7 +36,7 @@ export class AuthService {
 
   async loginUser(user: ResponseUserDto) {
     const payload = {
-      sub: user.id,
+      sub: user.id.toString(),
       email: user.email
     }
 

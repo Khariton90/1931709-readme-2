@@ -78,7 +78,7 @@ export class BlogUserController {
   @Patch('/subscribe/:id')
   @ApiResponse({status: HttpStatus.OK, description: 'Subscribing/unsubscribing to a user'})
   @ApiResponse({status: HttpStatus.UNAUTHORIZED, description: 'The user is not logged in'})
-  async subscribe(@Param('id', CheckMongoidValidationPipe) id: string, @Req() req: ExtendedUserRequest) {
-    await this.blogUserService.subscribe(req.user.email, id);
+  async subscribe(@Param('id', CheckMongoidValidationPipe) id: string, @Req() { user }: ExtendedUserRequest) {
+    await this.blogUserService.subscribe(user.email, id);
   }
 }
