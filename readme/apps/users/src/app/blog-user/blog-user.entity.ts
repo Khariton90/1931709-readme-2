@@ -1,7 +1,6 @@
 import { User } from '@readme/shared-types';
 import { compare, genSalt, hash } from 'bcrypt';
-
-const SALT_ROUNDS = 10;
+import { SALT_ROUNDS } from './blog-user.constant';
 
 export class BlogUserEntity implements User {
   public _id: string;

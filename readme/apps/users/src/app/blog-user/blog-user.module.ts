@@ -1,3 +1,4 @@
+import { BlogUserSubscribersModel, BlogUserSubscribersSchema } from './blog-user-subscribers.model';
 import { Module } from '@nestjs/common';
 import { BlogUserController } from './blog-user.controller';
 import { BlogUserService } from './blog-user.service';
@@ -12,7 +13,8 @@ import { RABBITMQ_SERVICE } from './blog-user.constant';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: BlogUserModel.name, schema: BlogUserSchema}
+      { name: BlogUserModel.name, schema: BlogUserSchema},
+      { name: BlogUserSubscribersModel.name, schema: BlogUserSubscribersSchema }
     ]),
     ClientsModule.registerAsync([
       {

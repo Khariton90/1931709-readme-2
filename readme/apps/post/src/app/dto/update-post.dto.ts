@@ -4,10 +4,10 @@ export class UpdatePostDto {
   videoUrl?: string;
   preview?: string;
   tags?: string[];
-  description?: string;
-  quote: string;
+  description: string;
+  quote?: string;
   authorId: string;
-  photo: string;
+  photo?: string;
   link: string;
   createdAt?: Date
   publishAt?: Date

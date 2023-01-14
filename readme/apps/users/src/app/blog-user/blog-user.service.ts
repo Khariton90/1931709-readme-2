@@ -1,12 +1,14 @@
+import { ChangePasswordDto } from './dto/change-password-dto';
 import { BlogUserRepository } from './blog-user.repository';
 import { Injectable, Inject } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as dayjs from 'dayjs';
 import { BlogUserEntity } from './blog-user.entity';
 import { ClientProxy } from '@nestjs/microservices';
-import { createEvent } from '@readme/core';
+import { changePassword, createEvent } from '@readme/core';
 import { CommandEvent } from '@readme/shared-types';
-import { RABBITMQ_SERVICE } from './blog-user.constant';
+import { RABBITMQ_SERVICE, SALT_ROUNDS } from './blog-user.constant';
+import { compare } from 'bcrypt';
 
 @Injectable()
 export class BlogUserService {
@@ -26,13 +28,13 @@ export class BlogUserService {
   }
 
   async register(dto: CreateUserDto) {
-    const { email, firstname, lastname, password, dateRegister } = dto;
+    const { email, firstname, lastname, password, dateRegister, avatar } = dto;
     const blogUser = {
       email, 
       firstname, 
       lastname, 
       passwordHash: '', 
-      avatar: '', 
+      avatar, 
       dateRegister: dayjs(dateRegister).toDate(), 
       subscribers: 0, 
       posts: 0
@@ -68,5 +70,29 @@ export class BlogUserService {
     }
 
     return existUser;
+  }
+
+  async findByEmailAndChangePassword(changePasswordDto: ChangePasswordDto, email: string) {
+    const existUser = await this.blogUserRepository.findByEmail(email);
+
+    if (!existUser) {
+      throw new Error('The user with this email was not found');
+    }
+
+    const correctPassword = await compare(changePasswordDto.currentPassword, existUser.passwordHash);
+
+    if (!correctPassword) {
+      throw new Error('Passwords dont match');
+    }
+
+    const newPassword = await changePassword(changePasswordDto.newPassword, SALT_ROUNDS);
+    const newEntity = new BlogUserEntity({...existUser, passwordHash: newPassword});
+    const updateUser = await this.blogUserRepository.update(existUser._id, newEntity);
+
+    return updateUser;
+  }
+
+  async subscribe(email: string, id: string) {
+    await this.blogUserRepository.subscribe(email, id);
   }
 }

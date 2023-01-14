@@ -9,7 +9,7 @@ export async function getJwtConfig(configService: ConfigService): Promise<JwtMod
   return {
     secret: configService.get<string>('jwt.secret'),
     signOptions: { 
-      expiresIn: '60s',
+      expiresIn: '10m',
        algorithm: 'HS256' 
       }
   }
