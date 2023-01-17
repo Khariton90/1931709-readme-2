@@ -26,6 +26,7 @@ export class PostService {
 
   async createPost(dto: CreatePostDto): Promise<Post> {
     const postEntity = new PostEntity(dto);
+    const newPost = await this.postRepository.create(postEntity);
 
     this.rabbitClient.emit(
       createEvent(CommandEvent.AddPost),
@@ -37,7 +38,7 @@ export class PostService {
       }
     )
 
-    return this.postRepository.create(postEntity);
+    return newPost;
   }
 
   async updatePost(id: number, dto: UpdatePostDto): Promise<Post> {

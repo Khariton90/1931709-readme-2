@@ -4,6 +4,7 @@ import { EmailSubscriberRepository } from './email-subscriber.repository';
 import { EMAIL_SUBSCRIBER_EXISTS } from './email-subscriber.constant';
 import { EmailSubscriberEntity } from './email-subscriber.entity';
 import { MailService } from '../mail/mail.service';
+import { Subscriber } from '@readme/shared-types';
 
 @Injectable()
 export class EmailSubscriberService {
@@ -26,7 +27,8 @@ export class EmailSubscriberService {
   }
 
   public async addPost() {
-    const allSubscribers = await this.emailSubscriberRepository.findAll();
-    allSubscribers.forEach(async (subscriber) => await this.mailService.sendNotifyPost(subscriber));
+    const SUBSCRIBERS_LIMIT_COUNT = 20;
+    const subscribers = await this.emailSubscriberRepository.findAll(SUBSCRIBERS_LIMIT_COUNT);
+    await Promise.all(subscribers.map((subscriber: Subscriber) => this.mailService.sendNotifyPost(subscriber)));
   }
 }

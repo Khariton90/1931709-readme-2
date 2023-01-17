@@ -53,19 +53,11 @@ export class BlogUserRepository implements CRUDRepository<BlogUserEntity, string
     .find({subscribers: subscriberId});
 
     if (existSubscriber.length) {
-      await this.blogUserModel.
-        findOneAndUpdate({userEmail}, {'$inc': {subscribers: -1}})
-        .exec();
-        await this.blogUserSubscribersModel
-        .findOneAndUpdate({userEmail}, {$pull: {subscribers: subscriberId}})
-        .exec();
+      await this.blogUserModel.findOneAndUpdate({userEmail}, {'$inc': {subscribers: -1}}).exec();
+      await this.blogUserSubscribersModel.findOneAndUpdate({userEmail}, {$pull: {subscribers: subscriberId}}).exec();
     } else {
-      await this.blogUserModel.
-        findOneAndUpdate({userEmail}, {'$inc': {subscribers: 1}})
-        .exec();
-        await this.blogUserSubscribersModel
-        .findOneAndUpdate({userEmail}, {$push: {subscribers: subscriberId}})
-        .exec();
+      await this.blogUserModel.findOneAndUpdate({userEmail}, {'$inc': {subscribers: 1}}).exec();
+      await this.blogUserSubscribersModel.findOneAndUpdate({userEmail}, {$push: {subscribers: subscriberId}}).exec();
     }
   }
 
