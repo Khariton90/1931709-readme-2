@@ -27,7 +27,7 @@ export class EmailSubscriberService {
   }
 
   public async addPost() {
-    const SUBSCRIBERS_LIMIT_COUNT = 20;
+    const SUBSCRIBERS_LIMIT_COUNT = 100;
     const subscribers = await this.emailSubscriberRepository.findAll(SUBSCRIBERS_LIMIT_COUNT);
     await Promise.all(subscribers.map((subscriber: Subscriber) => this.mailService.sendNotifyPost(subscriber)));
   }
