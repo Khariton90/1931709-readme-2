@@ -36,17 +36,20 @@ export class AuthService {
 
   async loginUser(user: ResponseUserDto) {
     const payload = {
-      sub: user.id,
+      sub: user.id.toString(),
       email: user.email
     }
 
     const accessToken = await this.jwtService.signAsync(payload);
     const refreshToken = await this.jwtService.signAsync(
-      { sub: user.id },
+      payload,
       { expiresIn: '7d' }
     )
 
-    await this.authRepository.create({ refreshToken });
+    await this.authRepository.findByUpdateOrCreate({ 
+      userId: user.id, 
+      refreshToken 
+    });
 
     return {
       access_token: accessToken,

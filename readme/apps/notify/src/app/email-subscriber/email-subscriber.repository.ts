@@ -32,4 +32,10 @@ export class EmailSubscriberRepository implements CRUDRepository<EmailSubscriber
   public async findByEmail(email: string): Promise<Subscriber | null> {
     return this.emailSubscriberModel.findOne({ email }).exec();
   }
+
+  public async findAll(limit: number): Promise<Subscriber[] | []> {
+    const subscribers = await this.emailSubscriberModel.find().limit(limit).lean();
+    return subscribers;
+  }
 }
+

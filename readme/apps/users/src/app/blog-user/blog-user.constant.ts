@@ -1,1 +1,2 @@
 export const RABBITMQ_SERVICE = 'RABBITMQ_SERVICE';
+export const SALT_ROUNDS = 10;

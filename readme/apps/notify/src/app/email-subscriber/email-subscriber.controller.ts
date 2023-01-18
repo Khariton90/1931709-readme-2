@@ -14,4 +14,9 @@ export class EmailSubscriberController {
   public async create(subscriber: CreateSubscriberDto) {
     return this.subscriberService.addSubscriber(subscriber);
   }
+
+  @EventPattern({cmd: CommandEvent.AddPost})
+  public async addPost() {
+    return this.subscriberService.addPost();
+  }
 }

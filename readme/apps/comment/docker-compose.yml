@@ -3,7 +3,7 @@ services:
   mongodb:
     image: mongo
     restart: always
-    container_name: mongodb
+    container_name: readme.comment.mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: test
@@ -22,7 +22,7 @@ services:
   mongodb-express:
     image: mongo-express
     restart: always
-    container_name: mongo-express
+    container_name: readme.comment.mongo-express
     ports:
       - 8082:8081
     environment:

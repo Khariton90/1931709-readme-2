@@ -5,7 +5,12 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 @Schema({
   collection: 'tokens'
 })
-export class AuthModel extends Document implements RefreshToken {  
+export class AuthModel extends Document implements RefreshToken {
+  @Prop({
+    required: true
+  })
+  public userId: string
+
   @Prop({
     required: true
   })

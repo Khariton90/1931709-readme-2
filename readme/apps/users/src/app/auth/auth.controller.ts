@@ -1,7 +1,7 @@
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthService } from './auth.service';
-import { Controller, Body, HttpStatus, Post, Delete } from '@nestjs/common';
+import { Controller, Body, HttpStatus, Post, Delete} from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('auth')
