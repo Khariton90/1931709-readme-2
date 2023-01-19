@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-
 export class CreateCommentDto {
   @ApiProperty({
     required: true,
@@ -19,4 +18,6 @@ export class CreateCommentDto {
     example: '6398befd206451820fdd0c8c',
   })
   public postId: string;
+
+  public createdAt?: string;
 }

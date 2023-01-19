@@ -1,27 +1,28 @@
+import { MinLength, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CommentDto {
-  @ApiProperty({
-    required: true,
-    example: 'f23122112321213123',
-  })
-  public _id: string;
+  public _id?: string;
 
   @ApiProperty({
     required: true,
     example: 'Hello world',
   })
+  @MinLength(10, {message: 'Min length comment text 10'})
+  @MaxLength(300, {message: 'Max length comment text 300'})
   public text: string;
 
   @ApiProperty({
     required: true,
-    example: 'f23122112321213123',
+    example: '6398befd206451820fdd0c8c',
   })
   public userId: string;
 
   @ApiProperty({
     required: true,
-    example: 'f23122112321213123',
+    example: '6398befd206451820fdd0c8c',
   })
   public postId: string;
+
+  public createdAt?: string; 
 }

@@ -2,7 +2,9 @@ import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({
-  collection: 'comments'
+  collection: 'comments',
+  timestamps: true,
+  versionKey: false
 })
 export class CommentsModel extends Document {
   @Prop()
