@@ -2,11 +2,11 @@ import { CommentQuery } from './query/comment.query';
 import { ResponseCommentDto } from './dto/response-comment.dto';
 import { ExtendedUserRequest } from '@readme/shared-types';
 import { CheckMongoidValidationPipe } from './pipes/CheckMongoidValidationPipe';
-import { Get, Param, Req, Query } from '@nestjs/common/decorators';
+import { Get, Param, Req, Query, UsePipes } from '@nestjs/common/decorators';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { plainToInstance } from 'class-transformer';
 import { CommentDto } from './dto/comment.dto';
-import { Controller, Post, Body, UseGuards, HttpStatus, Delete } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, HttpStatus, Delete, ValidationPipe } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { HttpException } from '@nestjs/common/exceptions';
@@ -31,10 +31,12 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Post('/')
+  @UsePipes(new ValidationPipe())
   @ApiResponse({status: HttpStatus.CREATED, description: 'Created new post'})
   @ApiResponse({status: HttpStatus.UNAUTHORIZED, description: 'The user is not logged in'})
-  async create(@Body() dto: CommentDto): Promise<CommentDto> {
-    const newComment = await this.appService.create(dto);
+  @ApiResponse({status: HttpStatus.BAD_REQUEST, description: 'Сheck the correctness of the data being sent'})
+  async create(@Body() dto: CommentDto, @Req() { user }: ExtendedUserRequest): Promise<CommentDto> {
+    const newComment = await this.appService.create({...dto, userId: user.sub});
 
     const { 
       _id, 

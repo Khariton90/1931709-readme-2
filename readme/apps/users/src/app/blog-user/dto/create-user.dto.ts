@@ -14,13 +14,8 @@ export class CreateUserDto {
   @Expose()
   public email: string;
 
-  @ApiProperty({
-    description: 'Date format to ISO string',
-    required: true,
-    example: '2022-11-01T21:00:00.000Z'
-  })
   @Expose()
-  public dateRegister: string;
+  public dateRegister?: string;
 
   @ApiProperty({
     description: 'User firstname',
