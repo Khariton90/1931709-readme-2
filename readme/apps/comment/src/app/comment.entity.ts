@@ -5,6 +5,7 @@ export class CommentEntity {
   public text: string;
   public postId: string;
   public userId: string;
+  public createdAt: string;
 
   constructor(comment: CommentDto) {
     this.fillEntity(comment);
@@ -19,5 +20,6 @@ export class CommentEntity {
     this.text = comment.text;
     this.postId = comment.postId;
     this.userId = comment.userId;
+    this.createdAt = comment.createdAt;
   }
 }

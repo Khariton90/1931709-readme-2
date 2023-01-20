@@ -2,7 +2,7 @@ import { Expose } from 'class-transformer';
 import { IsEmail, IsOptional, IsString, MinLength, MaxLength } from 'class-validator';
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateUserDto {
+export class UpdateUserDto {
   @ApiProperty({
     description: 'The uniq user email of User',
     required: true,
@@ -12,8 +12,13 @@ export class CreateUserDto {
     message: 'invalid email'
   })
   @Expose()
-  public email: string;
+  public email?: string;
 
+  @ApiProperty({
+    description: 'Date format to ISO string',
+    required: true,
+    example: '2022-11-01T21:00:00.000Z'
+  })
   @Expose()
   public dateRegister?: string;
 
@@ -26,7 +31,7 @@ export class CreateUserDto {
   @IsString()
   @MinLength(5, { message: 'Min Length firstname is 5' })
   @MaxLength(50, { message: 'Max Length firstname is 50' })
-  public firstname: string;
+  public firstname?: string;
 
   @ApiProperty({
     description: 'User lastname',
@@ -35,7 +40,7 @@ export class CreateUserDto {
   })
   @Expose()
   @IsString()
-  public lastname: string;
+  public lastname?: string;
 
   @ApiProperty({
     description: 'User password',
@@ -46,7 +51,7 @@ export class CreateUserDto {
   @IsString()
   @MinLength(6, { message: 'Min Length password is 6' })
   @MaxLength(12, { message: 'Max Length password is 12' })
-  public password: string;
+  public password?: string;
 
   @ApiProperty({
     description: 'User avatar',

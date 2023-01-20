@@ -1,9 +1,15 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 import { MinLength, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CommentDto {
-  public _id?: string;
+export class ResponseCommentDto {
+  @ApiProperty({
+    required: true,
+    example: '63c9336947ade1dfb49c301e',
+  })
+  @Transform(({ obj }) => obj._id.toString())
+  @Expose({ name: '_id'})
+  public id: string;
 
   @ApiProperty({
     required: true,
@@ -16,17 +22,22 @@ export class CommentDto {
 
   @ApiProperty({
     required: true,
-    example: '6398befd206451820fdd0c8c',
+    example: '63c9336947ade1dfb49c301e',
   })
   @Expose()
   public userId: string;
 
   @ApiProperty({
     required: true,
-    example: '6398befd206451820fdd0c8c',
+    example: '63c9336947ade1dfb49c301e',
   })
   @Expose()
   public postId: string;
 
-  public createdAt?: string; 
+  @ApiProperty({
+    required: true,
+    example: '2023-01-19T12:40:59.998Z',
+  })
+  @Expose()
+  public createdAt: string;
 }
